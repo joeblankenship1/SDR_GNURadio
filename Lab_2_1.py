@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Lab 2 1
-# Generated: Fri Jan 15 15:18:50 2016
+# Generated: Wed Sep 26 13:37:34 2018
 ##################################################
+
 
 if __name__ == '__main__':
     import ctypes
@@ -30,6 +32,7 @@ from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
 
+
 class Lab_2_1(grc_wxgui.top_block_gui):
 
     def __init__(self):
@@ -54,7 +57,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         	sizer=_signal_amp_sizer,
         	value=self.signal_amp,
         	callback=self.set_signal_amp,
-        	label="Signal Amp",
+        	label='Signal Amp',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -77,7 +80,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         	sizer=_noise_amp_sizer,
         	value=self.noise_amp,
         	callback=self.set_noise_amp,
-        	label="Noise Amp",
+        	label='Noise Amp',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -104,7 +107,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         	sizer=_freq_sizer,
         	value=self.freq,
         	callback=self.set_freq,
-        	label="Frequency",
+        	label='Frequency',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -123,7 +126,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         self.Add(_freq_sizer)
         self.wxgui_scopesink2_0 = scopesink2.scope_sink_c(
         	self.nb.GetPage(0).GetWin(),
-        	title="Scope Plot",
+        	title='Scope Plot',
         	sample_rate=samp_rate,
         	v_scale=0.5,
         	v_offset=0,
@@ -132,7 +135,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         	xy_mode=True,
         	num_inputs=1,
         	trig_mode=wxgui.TRIG_MODE_AUTO,
-        	y_axis_label="Counts",
+        	y_axis_label='Counts',
         )
         self.nb.GetPage(0).Add(self.wxgui_scopesink2_0.win)
         self.wxgui_fftsink2_0 = fftsink2.fft_sink_c(
@@ -147,7 +150,7 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         	fft_rate=15,
         	average=False,
         	avg_alpha=None,
-        	title="FFT Plot",
+        	title='FFT Plot',
         	peak_hold=False,
         )
         self.nb.GetPage(1).Add(self.wxgui_fftsink2_0.win)
@@ -159,31 +162,30 @@ class Lab_2_1(grc_wxgui.top_block_gui):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 1))    
-        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))    
-        self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.wxgui_fftsink2_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))    
-
+        self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
+        self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.wxgui_fftsink2_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))
 
     def get_signal_amp(self):
         return self.signal_amp
 
     def set_signal_amp(self, signal_amp):
         self.signal_amp = signal_amp
-        self.analog_sig_source_x_0.set_amplitude(self.signal_amp)
         self._signal_amp_slider.set_value(self.signal_amp)
         self._signal_amp_text_box.set_value(self.signal_amp)
+        self.analog_sig_source_x_0.set_amplitude(self.signal_amp)
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.wxgui_fftsink2_0.set_sample_rate(self.samp_rate)
-        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
-        self.blocks_throttle_0.set_sample_rate(self.samp_rate)
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
+        self.wxgui_fftsink2_0.set_sample_rate(self.samp_rate)
+        self.blocks_throttle_0.set_sample_rate(self.samp_rate)
+        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
     def get_noise_amp(self):
         return self.noise_amp
@@ -199,14 +201,17 @@ class Lab_2_1(grc_wxgui.top_block_gui):
 
     def set_freq(self, freq):
         self.freq = freq
-        self.analog_sig_source_x_0.set_frequency(self.freq)
         self._freq_slider.set_value(self.freq)
         self._freq_text_box.set_value(self.freq)
+        self.analog_sig_source_x_0.set_frequency(self.freq)
+
+
+def main(top_block_cls=Lab_2_1, options=None):
+
+    tb = top_block_cls()
+    tb.Start(True)
+    tb.Wait()
 
 
 if __name__ == '__main__':
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = Lab_2_1()
-    tb.Start(True)
-    tb.Wait()
+    main()

@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Tcp Client
-# Generated: Fri Jan 15 15:18:45 2016
+# Generated: Thu Sep 27 19:09:03 2018
 ##################################################
+
 
 if __name__ == '__main__':
     import ctypes
@@ -27,6 +29,7 @@ from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
 
+
 class tcp_client(grc_wxgui.top_block_gui):
 
     def __init__(self):
@@ -49,7 +52,7 @@ class tcp_client(grc_wxgui.top_block_gui):
         	sizer=_freq_sizer,
         	value=self.freq,
         	callback=self.set_freq,
-        	label="Frequency",
+        	label='Frequency',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -69,7 +72,7 @@ class tcp_client(grc_wxgui.top_block_gui):
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blks2_tcp_sink_0 = grc_blks2.tcp_sink(
         	itemsize=gr.sizeof_float*1,
-        	addr="127.0.0.1",
+        	addr='127.0.0.1',
         	port=12345,
         	server=False,
         )
@@ -78,31 +81,33 @@ class tcp_client(grc_wxgui.top_block_gui):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_throttle_0, 0))    
-        self.connect((self.blocks_throttle_0, 0), (self.blks2_tcp_sink_0, 0))    
-
+        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_throttle_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.blks2_tcp_sink_0, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
+        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
     def get_freq(self):
         return self.freq
 
     def set_freq(self, freq):
         self.freq = freq
-        self.analog_sig_source_x_0.set_frequency(self.freq)
         self._freq_slider.set_value(self.freq)
         self._freq_text_box.set_value(self.freq)
+        self.analog_sig_source_x_0.set_frequency(self.freq)
+
+
+def main(top_block_cls=tcp_client, options=None):
+
+    tb = top_block_cls()
+    tb.Start(True)
+    tb.Wait()
 
 
 if __name__ == '__main__':
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = tcp_client()
-    tb.Start(True)
-    tb.Wait()
+    main()

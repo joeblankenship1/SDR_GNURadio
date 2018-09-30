@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Tcp Server
-# Generated: Fri Jan 15 15:18:39 2016
+# Generated: Thu Sep 27 19:08:57 2018
 ##################################################
+
 
 if __name__ == '__main__':
     import ctypes
@@ -26,6 +28,7 @@ from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
 
+
 class tcp_server(grc_wxgui.top_block_gui):
 
     def __init__(self):
@@ -43,7 +46,7 @@ class tcp_server(grc_wxgui.top_block_gui):
         ##################################################
         self.wxgui_scopesink2_0 = scopesink2.scope_sink_f(
         	self.GetWin(),
-        	title="Scope Plot",
+        	title='Scope Plot',
         	sample_rate=samp_rate,
         	v_scale=0,
         	v_offset=0,
@@ -52,12 +55,12 @@ class tcp_server(grc_wxgui.top_block_gui):
         	xy_mode=False,
         	num_inputs=1,
         	trig_mode=wxgui.TRIG_MODE_AUTO,
-        	y_axis_label="Counts",
+        	y_axis_label='Counts',
         )
         self.Add(self.wxgui_scopesink2_0.win)
         self.blks2_tcp_source_0 = grc_blks2.tcp_source(
         	itemsize=gr.sizeof_float*1,
-        	addr="0.0.0.0",
+        	addr='0.0.0.0',
         	port=12345,
         	server=True,
         )
@@ -65,8 +68,7 @@ class tcp_server(grc_wxgui.top_block_gui):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blks2_tcp_source_0, 0), (self.wxgui_scopesink2_0, 0))    
-
+        self.connect((self.blks2_tcp_source_0, 0), (self.wxgui_scopesink2_0, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -76,9 +78,12 @@ class tcp_server(grc_wxgui.top_block_gui):
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
 
 
-if __name__ == '__main__':
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = tcp_server()
+def main(top_block_cls=tcp_server, options=None):
+
+    tb = top_block_cls()
     tb.Start(True)
     tb.Wait()
+
+
+if __name__ == '__main__':
+    main()

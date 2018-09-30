@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Lab 4 1 1
-# Generated: Fri Jan 15 15:19:22 2016
+# Generated: Wed Sep 26 13:38:52 2018
 ##################################################
+
 
 if __name__ == '__main__':
     import ctypes
@@ -32,6 +34,7 @@ import osmosdr
 import time
 import wx
 
+
 class Lab_4_1_1(grc_wxgui.top_block_gui):
 
     def __init__(self):
@@ -55,7 +58,7 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         	parent=self.GetWin(),
         	value=self.samp_rate,
         	callback=self.set_samp_rate,
-        	label="Sample Rate",
+        	label='Sample Rate',
         	converter=forms.float_converter(),
         )
         self.Add(self._samp_rate_text_box)
@@ -65,7 +68,7 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         	sizer=_gain_sizer,
         	value=self.gain,
         	callback=self.set_gain,
-        	label="Gain",
+        	label='Gain',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -86,7 +89,7 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         	parent=self.GetWin(),
         	value=self.freq,
         	callback=self.set_freq,
-        	label="Frequency",
+        	label='Frequency',
         	converter=forms.float_converter(),
         )
         self.Add(self._freq_text_box)
@@ -102,11 +105,11 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         	fft_rate=15,
         	average=False,
         	avg_alpha=None,
-        	title="FFT Plot",
+        	title='FFT Plot',
         	peak_hold=False,
         )
         self.Add(self.wxgui_fftsink2_0.win)
-        self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + "" )
+        self.rtlsdr_source_0 = osmosdr.source( args="numchan=" + str(1) + " " + '' )
         self.rtlsdr_source_0.set_sample_rate(samp_rate)
         self.rtlsdr_source_0.set_center_freq(freq, 0)
         self.rtlsdr_source_0.set_freq_corr(0, 0)
@@ -116,16 +119,16 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         self.rtlsdr_source_0.set_gain(gain, 0)
         self.rtlsdr_source_0.set_if_gain(0, 0)
         self.rtlsdr_source_0.set_bb_gain(0, 0)
-        self.rtlsdr_source_0.set_antenna("", 0)
+        self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(0, 0)
-          
+
         self.rational_resampler_xxx_0 = filter.rational_resampler_ccc(
                 interpolation=audio_rate * audio_interp,
                 decimation=int(samp_rate),
                 taps=None,
                 fractional_bw=None,
         )
-        self.audio_sink_0 = audio.sink(audio_rate, "", True)
+        self.audio_sink_0 = audio.sink(audio_rate, '', True)
         self.analog_wfm_rcv_0 = analog.wfm_rcv(
         	quad_rate=audio_rate * audio_interp,
         	audio_decimation=audio_interp,
@@ -134,11 +137,10 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_wfm_rcv_0, 0), (self.audio_sink_0, 0))    
-        self.connect((self.rational_resampler_xxx_0, 0), (self.analog_wfm_rcv_0, 0))    
-        self.connect((self.rtlsdr_source_0, 0), (self.rational_resampler_xxx_0, 0))    
-        self.connect((self.rtlsdr_source_0, 0), (self.wxgui_fftsink2_0, 0))    
-
+        self.connect((self.analog_wfm_rcv_0, 0), (self.audio_sink_0, 0))
+        self.connect((self.rational_resampler_xxx_0, 0), (self.analog_wfm_rcv_0, 0))
+        self.connect((self.rtlsdr_source_0, 0), (self.rational_resampler_xxx_0, 0))
+        self.connect((self.rtlsdr_source_0, 0), (self.wxgui_fftsink2_0, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -179,9 +181,12 @@ class Lab_4_1_1(grc_wxgui.top_block_gui):
         self.audio_interp = audio_interp
 
 
-if __name__ == '__main__':
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = Lab_4_1_1()
+def main(top_block_cls=Lab_4_1_1, options=None):
+
+    tb = top_block_cls()
     tb.Start(True)
     tb.Wait()
+
+
+if __name__ == '__main__':
+    main()

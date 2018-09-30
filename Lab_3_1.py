@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Lab 3 1
-# Generated: Fri Jan 15 15:18:57 2016
+# Generated: Thu Sep 27 19:19:40 2018
 ##################################################
+
 
 if __name__ == '__main__':
     import ctypes
@@ -26,6 +28,7 @@ from gnuradio.wxgui import waterfallsink2
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
+
 
 class Lab_3_1(grc_wxgui.top_block_gui):
 
@@ -53,16 +56,15 @@ class Lab_3_1(grc_wxgui.top_block_gui):
         	fft_rate=15,
         	average=False,
         	avg_alpha=None,
-        	title="Waterfall Plot",
+        	title='Waterfall Plot',
         )
         self.Add(self.wxgui_waterfallsink2_0.win)
-        self.audio_source_0 = audio.source(samp_rate, "", True)
+        self.audio_source_0 = audio.source(samp_rate, '', True)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.audio_source_0, 0), (self.wxgui_waterfallsink2_0, 0))    
-
+        self.connect((self.audio_source_0, 0), (self.wxgui_waterfallsink2_0, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -72,9 +74,12 @@ class Lab_3_1(grc_wxgui.top_block_gui):
         self.wxgui_waterfallsink2_0.set_sample_rate(self.samp_rate)
 
 
-if __name__ == '__main__':
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = Lab_3_1()
+def main(top_block_cls=Lab_3_1, options=None):
+
+    tb = top_block_cls()
     tb.Start(True)
     tb.Wait()
+
+
+if __name__ == '__main__':
+    main()
